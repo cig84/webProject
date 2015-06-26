@@ -1,4 +1,4 @@
-package principale;
+package filtros;
 
 import java.io.IOException;
 
@@ -38,9 +38,7 @@ public class Filtro2 implements Filter{
 		sc.setAttribute("accesos", acc);
 		System.out.println("El numero de accesos hasta ahora es " + accesos);
 		long start = System.currentTimeMillis();
-		
 		arg2.doFilter(arg0, arg1);
-		
 		long finish = System.currentTimeMillis();
 		long time = finish - start;
 		System.out.println("El servlet JDBC tarda " + time + " milisegundos");

@@ -34,7 +34,9 @@ public class Filtro1 implements Filter{
 //		sc.setAttribute("accesos", accesos);
 //		System.out.println("El numero de accesos hasta ahora es " + accesos);
 		long start = System.currentTimeMillis();
+		
 		arg2.doFilter(arg0, arg1);
+		
 		long finish = System.currentTimeMillis();
 		long time = finish - start;
 		System.out.println("El servlet Hibernate tarda " + time + " milisegundos");

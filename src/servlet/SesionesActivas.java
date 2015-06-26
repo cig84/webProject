@@ -24,6 +24,7 @@ import org.apache.logging.log4j.Logger;
 public class SesionesActivas extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = LogManager.getRootLogger();
+//	private int nVeces = 0;
    
     /**
      * @see HttpServlet#HttpServlet()
@@ -53,6 +54,8 @@ public class SesionesActivas extends HttpServlet {
 			log.info("No hay sesiones activas");
 			pw.println("No hay sesiones activas");
 		}
+//		nVeces ++;
+//		log.info(nVeces);
 		
 	}
 

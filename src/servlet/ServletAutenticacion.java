@@ -53,46 +53,53 @@ public class ServletAutenticacion extends HttpServlet {
 		String UserPassword = request.getParameter("User_Pass");
 		response.setContentType("text/html");
 		out = response.getWriter();
-		
-		try {
-			cx = Pool.getConnection();
-			st = cx.createStatement();
-			rset = st.executeQuery("Select * from Users where user_name = '" + UserName + "'");
-			if (rset.next()){
-				String psw = rset.getString("user_pass");
-				String nombre = rset.getString("user_name");
-				if (UserPassword.equals(psw)){
-					HttpSession ses = request.getSession(false);
-					if(ses == null) {
-						log.info("No hay una sesión asociada a esta petición");
+		HttpSession ses = request.getSession(false);
+		if(ses == null){
+			try {			
+				cx = Pool.getConnection();
+				st = cx.createStatement();
+				rset = st.executeQuery("Select * from Users where user_name = '" + UserName + "'");
+				if (rset.next()){
+					String psw = rset.getString("user_pass");
+					String nombre = rset.getString("user_name");
+					if (UserPassword.equals(psw)){
 						ses = request.getSession();
 						ses.setAttribute("nombre", nombre);
-					}else {
-						log.info("La sesión con id " + request.getSession().getId() + " está asociada a esta petición");
+						log.info("Bienvenido " + ses.getAttribute("nombre"));
+						out.println("Bienvenido " + ses.getAttribute("nombre"));
+						log.info("La sesión con id " + request.getSession().getId() + " está asociada al usuario " + ses.getAttribute("nombre"));
+						out.println("La sesión con id " + request.getSession().getId() + " está asociada al usuario " + ses.getAttribute("nombre"));
+						response.sendRedirect("/WebProject/ServletRedireccion");
+					}	
+					else {
+						log.info("Contraseña no valida para este usuario");
+						out.println("Contraseña no valida para este usuario");
+						response.sendRedirect("/WebProject/");
 					}
-					log.info("Bienvenido " + ses.getAttribute("nombre"));
-					out.println("Bienvenido " + ses.getAttribute("nombre"));
 				}
 				else {
-					log.info("Contraseña no valida para este usuario");
-					out.println("Contraseña no valida para este usuario");
+					log.info("No existe un usuario con este nombre");
+					out.println("No existe un ususario con este nombre");
 				}
-			}
-			else {
-				log.info("No existe un usuario con este nombre");
-				out.println("No existe un ususario con este nombre");
-			}
 			
 		}
-		catch(Exception e) {
-			e.printStackTrace();
-			log.error("Error en el hacer la consulta a la base de datos");
-			out.println("Error en el hacer la consulta a la base de datos");
+			catch(Exception e) {
+				e.printStackTrace();
+				log.error("Error en el hacer la consulta a la base de datos");
+				out.println("Error en el hacer la consulta a la base de datos");
+			}
+			finally {
+				Pool.liberarRecursos(cx, st, rset);
+			}
 		}
-		finally {
-			Pool.liberarRecursos(cx, st, rset);
+		else{
+			log.info("Hay una sesión con id " + request.getSession().getId() + " ya asociada al usuario " + ses.getAttribute("nombre"));
+			out.println("Hay una sesión con id " + request.getSession().getId() + " ya asociada al usuario " + ses.getAttribute("nombre"));
+			out.println("Quieres hacer logout?");
+			out.println();
+			
+			
 		}
-		
 	}
 
 }
