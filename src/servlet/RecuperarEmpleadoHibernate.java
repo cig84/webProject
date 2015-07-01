@@ -20,6 +20,7 @@ import org.hibernate.SessionFactory;
 
 import principale.EmployeesService;
 import principale.InterfazRecuperable;
+import java.lang.Integer;
 
 
 
@@ -47,8 +48,7 @@ public class RecuperarEmpleadoHibernate extends HttpServlet {
 		EmployeesService empSer = new EmployeesService();
 		InterfazRecuperable oHiber = new EmployeesDAO();
 		empSer.setObj(oHiber);
-		String id = request.getParameter("Id");
-		int foo = Integer.parseInt(id);
+		String id = null;
 		
 		ServletContext sc = request.getServletContext();
 		SessionFactory sf = (SessionFactory) sc.getAttribute("sf");
@@ -58,13 +58,14 @@ public class RecuperarEmpleadoHibernate extends HttpServlet {
 //		log.info("La sesión está cerrada");
 		
 		try{
-			
-		Employees emp = (Employees) empSer.leerEmpleado(foo);
-		response.setContentType("text/html");
-		log.info("Empleado " + emp +" recuperado");
-		PrintWriter out = null;
-		out = response.getWriter();
-		out.println(emp.toString());
+			id = request.getParameter("Id");	
+			int foo = Integer.parseInt(id);
+			Employees emp = (Employees) empSer.leerEmpleado(foo);
+			response.setContentType("text/html");
+			log.info("Empleado " + emp +" recuperado");
+			PrintWriter out = null;
+			out = response.getWriter();
+			out.println(emp.toString());
 		}
 		catch(Exception e){
 			e.printStackTrace();

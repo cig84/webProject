@@ -1,24 +1,25 @@
 package servlet;
 
 import java.io.IOException;
-
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
- * Servlet implementation class ServletRedirección
+ * Servlet implementation class ServletErrores
  */
 
-public class ServletRedireccion extends HttpServlet {
+public class ServletErrores extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static final Logger log = LogManager.getRootLogger();   
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletRedireccion() {
+    public ServletErrores() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,12 +29,15 @@ public class ServletRedireccion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ServletContext sc = request.getServletContext();
-		String uri = (String) sc.getAttribute("uri");
-		if(uri.contentEquals("/WebProject/ServletAutenticacion") || uri.contentEquals("/WebProject/")){
-			response.sendRedirect("/WebProject/menu.html");
+		Throwable exception = (Throwable) request.getAttribute("javax.servlet.error.exception");
+		String nombreServlet = (String) request.getAttribute("javax.servlet.error.servlet_name");
+		if(exception != null){
+			log.info(exception + " ha ocurrido en " + nombreServlet);
 		}
-		else response.sendRedirect(uri);
+		else {
+			log.info("Ha ocurrido una exception, pero no en el servlet");
+		}
+		response.sendRedirect("/WebProject/error.html");
 	}
 
 	/**

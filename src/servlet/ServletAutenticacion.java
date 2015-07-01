@@ -69,7 +69,9 @@ public class ServletAutenticacion extends HttpServlet {
 						out.println("Bienvenido " + ses.getAttribute("nombre"));
 						log.info("La sesión con id " + request.getSession().getId() + " está asociada al usuario " + ses.getAttribute("nombre"));
 						out.println("La sesión con id " + request.getSession().getId() + " está asociada al usuario " + ses.getAttribute("nombre"));
-						response.sendRedirect("/WebProject/ServletRedireccion");
+						out.println("\n Gracias por logearse, dentro de poco será redirigido al menú principal");
+						response.setHeader("Refresh", "5; URL=/WebProject/ServletRedireccion");
+//						response.sendRedirect("/WebProject/ServletRedireccion");
 					}	
 					else {
 						log.info("Contraseña no valida para este usuario");
@@ -95,8 +97,6 @@ public class ServletAutenticacion extends HttpServlet {
 		else{
 			log.info("Hay una sesión con id " + request.getSession().getId() + " ya asociada al usuario " + ses.getAttribute("nombre"));
 			out.println("Hay una sesión con id " + request.getSession().getId() + " ya asociada al usuario " + ses.getAttribute("nombre"));
-			out.println("Quieres hacer logout?");
-			out.println();
 			
 			
 		}

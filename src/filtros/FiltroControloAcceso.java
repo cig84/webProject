@@ -54,7 +54,7 @@ public class FiltroControloAcceso implements Filter {
 			if (ses != null){
 			chain.doFilter(request, response);
 		}
-		else if(uri.contentEquals("/WebProject/ServletAutenticacion") || uri.contentEquals("/WebProject/")){
+		else if(uri.contentEquals("/WebProject/ServletAutenticacion") || uri.contentEquals("/WebProject/") || uri.contentEquals("/WebProject/menu.html") || uri.contentEquals("/WebProject/login.html")){
 			chain.doFilter(request, response);
 			ServletContext sc = servReq.getServletContext();
 			sc.setAttribute("uri", uri);
@@ -64,7 +64,7 @@ public class FiltroControloAcceso implements Filter {
 			ServletContext sc = servReq.getServletContext();
 			sc.setAttribute("uri", uri);
 			log.info(sc.getAttribute("uri"));
-			servResp.sendRedirect("/WebProject/");
+			servResp.sendRedirect("/WebProject/login.html");
 			
 		}
 		

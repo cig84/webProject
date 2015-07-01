@@ -38,7 +38,7 @@ public class ClaseHttpSessionListener implements HttpSessionListener{
 		ServletContext sc = arg0.getSession().getServletContext();
 		HashMap<String, HttpSession> mapSes = (HashMap<String, HttpSession>) sc.getAttribute("SessionsMap");
 		mapSes.remove(idSesión);
-		log.info("Estamos en sessionDestroyed y la sesión " + idSesión + " ha sido borrarda del mapa");
+		log.info("Estamos en sessionDestroyed y la sesión " + idSesión + " ha sido borrarda del mapa, por favor logearse otra vez");
 		
 	}
 

@@ -1,24 +1,25 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class ServletRedirección
+ * Servlet implementation class Logout
  */
-
-public class ServletRedireccion extends HttpServlet {
+public class Logout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletRedireccion() {
+    public Logout() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,12 +29,12 @@ public class ServletRedireccion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ServletContext sc = request.getServletContext();
-		String uri = (String) sc.getAttribute("uri");
-		if(uri.contentEquals("/WebProject/ServletAutenticacion") || uri.contentEquals("/WebProject/")){
-			response.sendRedirect("/WebProject/menu.html");
-		}
-		else response.sendRedirect(uri);
+		HttpSession ses = request.getSession(false);
+		PrintWriter out = response.getWriter();
+		out.println("El usuario " + ses.getAttribute("nombre") + " ya no está logeado");
+		ses.invalidate();
+		response.setHeader("Refresh", "3; URL=/WebProject");
+		
 	}
 
 	/**
