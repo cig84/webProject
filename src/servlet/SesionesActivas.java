@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -9,7 +10,6 @@ import java.util.Map.Entry;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,11 +48,11 @@ public class SesionesActivas extends HttpServlet {
 		while(it.hasNext()){
 			e = (Entry<String, HttpServlet>) it.next();
 			log.info("La sesión " + e.getValue() + " con id " + e.getKey() + " está asociada al usuario " + request.getSession().getAttribute("nombre"));
-			pw.println("La sesión " + e.getValue() + " con id " + e.getKey() + " está asociada al usuario " + request.getSession().getAttribute("nombre"));
+			pw.println(new Date() + " La sesión " + e.getValue() + " con id " + e.getKey() + " está asociada al usuario " + request.getSession().getAttribute("nombre"));
 		}
 		if (sesMap.isEmpty()){
 			log.info("No hay sesiones activas");
-			pw.println("No hay sesiones activas");
+			pw.println(new Date() + " No hay sesiones activas");
 		}
 //		nVeces ++;
 //		log.info(nVeces);

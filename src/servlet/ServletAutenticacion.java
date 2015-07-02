@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -69,7 +70,7 @@ public class ServletAutenticacion extends HttpServlet {
 						out.println("Bienvenido " + ses.getAttribute("nombre"));
 						log.info("La sesión con id " + request.getSession().getId() + " está asociada al usuario " + ses.getAttribute("nombre"));
 						out.println("La sesión con id " + request.getSession().getId() + " está asociada al usuario " + ses.getAttribute("nombre"));
-						out.println("\n Gracias por logearse, dentro de poco será redirigido al menú principal");
+						out.println(" Gracias por logearse, dentro de poco será redirigido al menú principal");
 						response.setHeader("Refresh", "5; URL=/WebProject/ServletRedireccion");
 //						response.sendRedirect("/WebProject/ServletRedireccion");
 					}	

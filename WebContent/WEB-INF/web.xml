@@ -148,7 +148,7 @@
   </filter>
   <filter-mapping>
     <filter-name>FiltroControloAcceso</filter-name>
-    <url-pattern>/gftrr</url-pattern>
+    <url-pattern>/JAMON</url-pattern>
   </filter-mapping>
   <session-config>
     <session-timeout>5</session-timeout>
