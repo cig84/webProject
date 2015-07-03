@@ -6,6 +6,7 @@ import hibernate.dataBaseHR.Employees;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -52,6 +53,7 @@ public class RecuperarEmpleadoHibernate extends HttpServlet {
 		
 		ServletContext sc = request.getServletContext();
 		SessionFactory sf = (SessionFactory) sc.getAttribute("sf");
+		
 //		Session ses = sf.openSession();
 //		log.info("La sesión está abierta");
 //		ses.close();
@@ -61,11 +63,16 @@ public class RecuperarEmpleadoHibernate extends HttpServlet {
 			id = request.getParameter("Id");	
 			int foo = Integer.parseInt(id);
 			Employees emp = (Employees) empSer.leerEmpleado(foo);
-			response.setContentType("text/html");
-			log.info("Empleado " + emp +" recuperado");
-			PrintWriter out = null;
-			out = response.getWriter();
-			out.println(emp.toString());
+			/* para el "mostrarEmpleadoId.jsp" */
+			request.setAttribute("emp", emp);
+			RequestDispatcher rd = request.getRequestDispatcher("/mostrarEmpleadoId.jsp");
+			rd.forward(request, response);
+			/* para el "hibernate.html" */
+//			response.setContentType("text/html");
+//			log.info("Empleado " + emp +" recuperado");
+//			PrintWriter out = null;
+//			out = response.getWriter();
+//			out.println(emp.toString());
 		}
 		catch(Exception e){
 			e.printStackTrace();
